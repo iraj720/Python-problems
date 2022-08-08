@@ -17,19 +17,19 @@ class Buffer:
         if len(self.finish_time) < self.size :
             start = request[0]
             if len(self.finish_time) > 0 :
-                start = max(request[0], self.finish_time[0])
+                start = max(request[0], self.finish_time[len(self.finish_time) - 1])
             self.finish_time.append(start + request[1])
             return Response(False, start)
         elif min(self.finish_time) <= request[0] :
             for item in self.finish_time :
                 if item <= request[0] :
                     self.finish_time.remove(item)
-                    start = item - request[0]
-                    if start < 0 :
-                        start = 0
+                    start = request[0]
+                    if len(self.finish_time) > 0 :
+                        start = max(request[0], self.finish_time[len(self.finish_time) - 1])
                     self.finish_time.append(start + request[1])
                     break
-            return Response(False, request[0])
+            return Response(False, start)
         else:
             return Response(True, -1)
 

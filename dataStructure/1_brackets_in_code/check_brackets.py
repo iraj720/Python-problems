@@ -18,19 +18,21 @@ def find_mismatch(text):
     for i, next in enumerate(text):
         if next in "([{":
             opening_brackets_stack.append(next)
-            misMatch = i
-            pass
+            continue
 
         if next in ")]}":
-            last = opening_brackets_stack[len(opening_brackets_stack) - 1]
-            if are_matching(last, next) :
-                opening_brackets_stack.pop()
-                misMatch = False
-            else :
-                misMatch = i
-            pass
-    if misMatch != False :
-        misMatch += 1
+            misMatch = i
+            if len(opening_brackets_stack) > 0 :
+                last = opening_brackets_stack[len(opening_brackets_stack) - 1]
+                if are_matching(last, next) :
+                    opening_brackets_stack.pop()
+                    misMatch = False
+                else :
+                    return i + 1
+                continue
+    if misMatch == False and misMatch != 0 :
+        return misMatch
+    return misMatch + 1
     
     return misMatch
 

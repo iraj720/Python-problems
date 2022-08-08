@@ -1,7 +1,6 @@
 # python3
 
 import sys, threading
-from time import time, time_ns
 sys.setrecursionlimit(10**7) # max depth of recursion
 threading.stack_size(2**27)  # new thread will get stack of such size
 
@@ -21,12 +20,12 @@ class TreeHeight:
                 childList = self.parent[node] 
                 if childList == []:
                         return 1
-                mylist = [self.height(childList[x]) for x in range(len(childList))]
+                mylist = [self.compute_height(childList[x]) for x in range(len(childList))]
                 return 1 + max(mylist)
 
 def main():
    tree = TreeHeight()
    tree.read()
-   tree.compute_height(tree.root)
+   print(tree.compute_height(tree.root))
       
 threading.Thread(target=main).start()
